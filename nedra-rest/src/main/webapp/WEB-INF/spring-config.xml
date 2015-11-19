@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util" xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+  http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+  http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd">
+
+	<context:component-scan base-package="ru.nedra.controller" />
+	<mvc:annotation-driven />
+
+
+	<bean id="dataSourceNedraProekt" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/NedraProektDB"/>
+	</bean>
+
+	<bean id="dataSourceNedra" class="org.springframework.jndi.JndiObjectFactoryBean">
+		<property name="jndiName" value="jdbc/NedraDB"/>
+	</bean>
+
+	<bean id="sessionFactoryNedra"
+		  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceNedra" />
+		<property name="annotatedClasses">
+			<list>
+				<value>ru.nedra.model.nedra.ApparaturaVEntity</value>
+				<value>ru.nedra.model.nedra.ApparaturaMetodaUchastkaVEntity</value>
+				<value>ru.nedra.model.nedra.GraffObrabotkiVEntity</value>
+				<value>ru.nedra.model.nedra.IsxodniyVEntity</value>
+				<value>ru.nedra.model.nedra.IsxodniyVEntityWithoutBlob</value>
+				<value>ru.nedra.model.nedra.IsxodniyTitulVEntity</value>
+				<value>ru.nedra.model.nedra.KFormatFailaVEntity</value>
+				<value>ru.nedra.model.nedra.KMetodObrabotkiVEntity</value>
+				<value>ru.nedra.model.nedra.KRaspPrimnikovVEntity</value>
+				<value>ru.nedra.model.nedra.KSistemaKoordinatVEntity</value>
+				<value>ru.nedra.model.nedra.KSxemaNbVEntity</value>
+				<value>ru.nedra.model.nedra.KRolUseraVEntity</value>
+				<value>ru.nedra.model.nedra.KTipIsxIsmVelichnyVEntity</value>
+				<value>ru.nedra.model.nedra.KTipKartyVEntity</value>
+				<value>ru.nedra.model.nedra.KVelichnVEntity</value>
+				<value>ru.nedra.model.nedra.KarabliVEntity</value>
+				<value>ru.nedra.model.nedra.KartyVEntity</value>
+				<value>ru.nedra.model.nedra.KartyPloshadyVEntity</value>
+				<value>ru.nedra.model.nedra.KoordinatyUglovPloshadyVEntity</value>
+				<value>ru.nedra.model.nedra.KoordinatyUglovUchastkaVEntity</value>
+				<value>ru.nedra.model.nedra.MetodVEntity</value>
+				<value>ru.nedra.model.nedra.MetodyUchastkaVEntity</value>
+				<value>ru.nedra.model.nedra.ObrabotkaVEntity</value>
+				<value>ru.nedra.model.nedra.PloshadyVEntity</value>
+				<value>ru.nedra.model.nedra.ProfilUchastkaVEntity</value>
+				<value>ru.nedra.model.nedra.SotrudnikiVEntity</value>
+				<value>ru.nedra.model.nedra.UchactokVEntity</value>
+				<value>ru.nedra.model.nedra.UserNedraVEntity</value>
+				<value>ru.nedra.model.nedra.UsersVEntity</value>
+				<value>ru.nedra.model.nedra.VersiyaFailaVEntity</value>
+				<value>ru.nedra.model.nedra.KTipShkalyVEntity</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="sessionFactoryNedraProekt"
+		  class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		<property name="dataSource" ref="dataSourceNedraProekt" />
+		<property name="annotatedClasses">
+			<list>
+				<value>ru.nedra.model.proekt.GruppaProfilVEntity</value>
+				<value>ru.nedra.model.proekt.PasportRasresaVEntity</value>
+				<value>ru.nedra.model.proekt.PasportTrassyVEntity</value>
+				<value>ru.nedra.model.proekt.ProektVEntity</value>
+				<value>ru.nedra.model.proekt.ProektIsxodniyVEntity</value>
+				<value>ru.nedra.model.proekt.ProektIsxodniySobstveniyVEntity</value>
+				<value>ru.nedra.model.proekt.ProektIsxodniySobstveniyVEntityWithoutBlob</value>
+				<value>ru.nedra.model.proekt.ProektObrabotkaVEntity</value>
+				<value>ru.nedra.model.proekt.ProektProfilVEntity</value>
+				<value>ru.nedra.model.proekt.ProektProfilBlobDataVEntity</value>
+				<value>ru.nedra.model.proekt.ProektProfilDataVEntity</value>
+				<value>ru.nedra.model.proekt.ProektUserVEntity</value>
+				<value>ru.nedra.model.proekt.TrassaBlobDataVEntity</value>
+				<value>ru.nedra.model.proekt.TrassaDataVEntity</value>
+			</list>
+		</property>
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">org.hibernate.dialect.OracleDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="txManagerNedraProekt"
+		  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryNedraProekt" />
+	</bean>
+
+	<bean id="txManagerNedra"
+		  class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactoryNedra" />
+	</bean>
+
+	<bean id="persistenceExceptionTranslationPostProcessor"
+		  class="org.springframework.dao.annotation.PersistenceExceptionTranslationPostProcessor" />
+
+	<bean id="gruppaprofilvDao"             class="ru.nedra.dao.proekt.GruppaProfilVDaoImpl"></bean>
+	<bean id="pasportrasresaDao"            class="ru.nedra.dao.proekt.PasportRasresaVDaoImpl"></bean>
+	<bean id="pasporttrassyDao"             class="ru.nedra.dao.proekt.PasportTrassyVDaoImpl"></bean>
+	<bean id="proektDao"                    class="ru.nedra.dao.proekt.ProektVDaoImpl"></bean>
+	<bean id="proektisxodniyDao"            class="ru.nedra.dao.proekt.ProektIsxodniyVDaoImpl"></bean>
+	<bean id="proektisxodniysobstveniyvDao" class="ru.nedra.dao.proekt.ProektIsxodniySobstveniyVDaoImpl"></bean>
+	<bean id="proektisxodniysobstveniyvWithoutBlobDao" class="ru.nedra.dao.proekt.ProektIsxodniySobstveniyVWithoutBlobDaoImpl"></bean>
+	<bean id="proektobrabotkavDao"          class="ru.nedra.dao.proekt.ProektObrabotkaVDaoImpl"></bean>
+	<bean id="proektprofilvDao"             class="ru.nedra.dao.proekt.ProektProfilVDaoImpl"></bean>
+	<bean id="proektprofilblobdatavDao"     class="ru.nedra.dao.proekt.ProektProfilBlobDataVDaoImpl"></bean>
+	<bean id="proektprofildatavDao"         class="ru.nedra.dao.proekt.ProektProfilDataVDaoImpl"></bean>
+	<bean id="proektuserDao"                class="ru.nedra.dao.proekt.ProektUserVDaoImpl"></bean>
+	<bean id="trassablobdatavDao"           class="ru.nedra.dao.proekt.TrassaBlobDataVDaoImpl"></bean>
+	<bean id="trassadataDao"                class="ru.nedra.dao.proekt.TrassaDataVDaoImpl"></bean>
+
+
+	<bean id="proectServices"                                   class="ru.nedra.services.proektEntity.ProectServicesImpl"></bean>
+	<bean id="proektIsxodniyVServices"                          class="ru.nedra.services.proektEntity.ProektIsxodniyVServicesImpl"></bean>
+	<bean id="proektIsxodniySobstveniyServices"                 class="ru.nedra.services.proektEntity.ProektIsxodniySobstveniyServicesImpl"></bean>
+	<bean id="proektIsxodniySobstveniyVWithoutBlobServices"     class="ru.nedra.services.proektEntity.ProektIsxodniySobstveniyVWithoutBlobServicesImpl"></bean>
+	<bean id="proektObrabotkaServices"                          class="ru.nedra.services.proektEntity.ProektObrabotkaServicesImpl"></bean>
+	<bean id="gruppaProfilServices"                             class="ru.nedra.services.proektEntity.GruppaProfilServicesImpl"></bean>
+	<bean id="proektProfilEntityServices"                       class="ru.nedra.services.proektEntity.ProektProfilEntityServicesImpl"></bean>
+	<bean id="proektProfilDataServices"                         class="ru.nedra.services.proektEntity.ProektProfilDataServicesImpl"></bean>
+	<bean id="proektUserServices"                               class="ru.nedra.services.proektEntity.ProektUserServicesImpl"></bean>
+
+
+	<bean id="isxodniyServices"            class="ru.nedra.services.nedraEntity.IsxodniyServicesImpl"></bean>
+	<bean id="isxodniyWithoutBlobServices" class="ru.nedra.services.nedraEntity.IsxodniyWithoutBlobServicesImpl"></bean>
+	<bean id="isxodniyTitulServices"            class="ru.nedra.services.nedraEntity.IsxodniyTitulServicesImpl"></bean>
+
+	<bean id="proect"                      class="ru.nedra.services.proekt.ProektServicesObjectImpl"></bean>
+	<bean id="proektProfilServices"        class="ru.nedra.services.proekt.ProektProfilServicesObjectImpl"></bean>
+	<bean id="gruppaProfilServicesObject"  class="ru.nedra.services.proekt.GruppaProfilServicesObjectImpl"></bean>
+
+	<bean id="apparaturaDao"              class="ru.nedra.dao.nedra.ApparaturaVDaoImpl"></bean>
+	<bean id="appMUDao"                   class="ru.nedra.dao.nedra.ApparaturaMetodaUchastkaVDaoImpl"></bean>
+	<bean id="graffobrabotkiDao"          class="ru.nedra.dao.nedra.GraffObrabotkiVDaoImpl"></bean>
+	<bean id="isxodniyDao"                class="ru.nedra.dao.nedra.IsxodniyVDaoImpl"></bean>
+	<bean id="isxodniyWithoutBlobDao"     class="ru.nedra.dao.nedra.IsxodniyVWithoutBlobDaoImpl"></bean>
+	<bean id="isxodniytitulDao"           class="ru.nedra.dao.nedra.IsxodniyTitulVDaoImpl"></bean>
+	<bean id="kformatfailaDao"            class="ru.nedra.dao.nedra.KFormatFailaVDaoImpl"></bean>
+	<bean id="kmetodobrabotkiDao"         class="ru.nedra.dao.nedra.KMetodObrabotkiVDaoImpl"></bean>
+	<bean id="kraspprimnikovDao"          class="ru.nedra.dao.nedra.KRaspPrimnikovVDaoImpl"></bean>
+	<bean id="kRolUseraVImplDao"          class="ru.nedra.dao.nedra.KRolUseraVDaoImpl"></bean>
+	<bean id="ksistemakoordinatDao"       class="ru.nedra.dao.nedra.KSistemaKoordinatVDaoImpl"></bean>
+	<bean id="kSxemaNbVImpl"              class="ru.nedra.dao.nedra.KSxemaNbVDaoImpl"></bean>
+	<bean id="ktipisxismvelichnyDao"      class="ru.nedra.dao.nedra.KTipIsxIsmVelichnyVDaoImpl"></bean>
+	<bean id="ktipkartyDao"               class="ru.nedra.dao.nedra.KTipKartyVDaoImpl"></bean>
+	<bean id="ktipshkalyDao"              class="ru.nedra.dao.nedra.KTipShkalyVDaoImpl"></bean>
+	<bean id="kvelichnDao"                class="ru.nedra.dao.nedra.KVelichnVDaoImpl"></bean>
+	<bean id="karabliDao"                 class="ru.nedra.dao.nedra.KarabliVDaoImpl"></bean>
+	<bean id="kartyDao"                   class="ru.nedra.dao.nedra.KartyVDaoImpl"></bean>
+	<bean id="kartyploshadyDao"           class="ru.nedra.dao.nedra.KartyPloshadyVDaoImpl"></bean>
+	<bean id="koordinatyuglovploshadyDao" class="ru.nedra.dao.nedra.KoordinatyUglovPloshadyVDaoImpl"></bean>
+	<bean id="koordinatyuglovuchastkaDao" class="ru.nedra.dao.nedra.KoordinatyUglovUchastkaVDaoImpl"></bean>
+	<bean id="metodDao"                   class="ru.nedra.dao.nedra.MetodVDaoImpl"></bean>
+	<bean id="metodyuchastkaDao"          class="ru.nedra.dao.nedra.MetodyUchastkaVDaoImpl"></bean>
+	<bean id="obrabotkaDao"               class="ru.nedra.dao.nedra.ObrabotkaVDaoImpl"></bean>
+	<bean id="ploshadyDao"                class="ru.nedra.dao.nedra.PloshadyVDaoImpl"></bean>
+	<bean id="profiluchastkaDao"          class="ru.nedra.dao.nedra.ProfilUchastkaVDaoImpl"></bean>
+	<bean id="sotrudnikiDao"              class="ru.nedra.dao.nedra.SotrudnikiVDaoImpl"></bean>
+	<bean id="uchactokDao"                class="ru.nedra.dao.nedra.UchactokVDaoImpl"></bean>
+	<bean id="userNedraDao"               class="ru.nedra.dao.nedra.UserNedraVDaoImpl"></bean>
+	<bean id="userDao"                    class="ru.nedra.dao.nedra.UsersVDaoImpl"></bean>
+	<bean id="versiyafailaDao"            class="ru.nedra.dao.nedra.VersiyaFailaVDaoImpl"></bean>
+
+	<bean id="viewResolver"
+		  class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<property name="prefix" value="/" />
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="multipartResolver"
+		  class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- max upload size in bytes -->
+		<property name="maxUploadSize" value="20971520" /> <!-- 20MB -->
+
+		<!-- max size of file in memory (in bytes) -->
+		<property name="maxInMemorySize" value="1048576" /> <!-- 1MB -->
+
+	</bean>
+
+	<bean
+			class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+		<property name="exceptionMappings">
+			<props>
+				<prop key="java.lang.Exception">Error</prop>
+			</props>
+		</property>
+	</bean>
+
+</beans>
